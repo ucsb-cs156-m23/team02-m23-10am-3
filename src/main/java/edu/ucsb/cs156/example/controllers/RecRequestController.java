@@ -82,39 +82,39 @@ public class RecRequestController extends ApiController {
         return savedRecommendation;
     }
 
-    @Operation(summary= "Delete a UCSBDiningCommons")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("")
-    public Object deleteCommons(
-            @Parameter(name="code") @RequestParam String code) {
-        UCSBDiningCommons commons = ucsbDiningCommonsRepository.findById(code)
-                .orElseThrow(() -> new EntityNotFoundException(UCSBDiningCommons.class, code));
+    // @Operation(summary= "Delete a UCSBDiningCommons")
+    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    // @DeleteMapping("")
+    // public Object deleteCommons(
+    //         @Parameter(name="code") @RequestParam String code) {
+    //     UCSBDiningCommons commons = ucsbDiningCommonsRepository.findById(code)
+    //             .orElseThrow(() -> new EntityNotFoundException(UCSBDiningCommons.class, code));
 
-        ucsbDiningCommonsRepository.delete(commons);
-        return genericMessage("UCSBDiningCommons with id %s deleted".formatted(code));
-    }
+    //     ucsbDiningCommonsRepository.delete(commons);
+    //     return genericMessage("UCSBDiningCommons with id %s deleted".formatted(code));
+    // }
 
-    @Operation(summary= "Update a single commons")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("")
-    public UCSBDiningCommons updateCommons(
-            @Parameter(name="code") @RequestParam String code,
-            @RequestBody @Valid UCSBDiningCommons incoming) {
+    // @Operation(summary= "Update a single commons")
+    // @PreAuthorize("hasRole('ROLE_ADMIN')")
+    // @PutMapping("")
+    // public UCSBDiningCommons updateCommons(
+    //         @Parameter(name="code") @RequestParam String code,
+    //         @RequestBody @Valid UCSBDiningCommons incoming) {
 
-        UCSBDiningCommons commons = ucsbDiningCommonsRepository.findById(code)
-                .orElseThrow(() -> new EntityNotFoundException(UCSBDiningCommons.class, code));
+    //     UCSBDiningCommons commons = ucsbDiningCommonsRepository.findById(code)
+    //             .orElseThrow(() -> new EntityNotFoundException(UCSBDiningCommons.class, code));
 
 
-        commons.setName(incoming.getName());  
-        commons.setHasSackMeal(incoming.getHasSackMeal());
-        commons.setHasTakeOutMeal(incoming.getHasTakeOutMeal());
-        commons.setHasDiningCam(incoming.getHasDiningCam());
-        commons.setLatitude(incoming.getLatitude());
-        commons.setLongitude(incoming.getLongitude());
+    //     commons.setName(incoming.getName());  
+    //     commons.setHasSackMeal(incoming.getHasSackMeal());
+    //     commons.setHasTakeOutMeal(incoming.getHasTakeOutMeal());
+    //     commons.setHasDiningCam(incoming.getHasDiningCam());
+    //     commons.setLatitude(incoming.getLatitude());
+    //     commons.setLongitude(incoming.getLongitude());
 
-        ucsbDiningCommonsRepository.save(commons);
+    //     ucsbDiningCommonsRepository.save(commons);
 
-        return commons;
-    }
+    //     return commons;
+    // }
 }
 
