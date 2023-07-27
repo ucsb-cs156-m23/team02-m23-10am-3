@@ -18,9 +18,9 @@ import lombok.Builder;
 public class UCSBDiningCommonsMenu {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id; 
-  
+  private Long id; 
+
   private String diningCommonsCode;
   private String name;
-  private boolean station;
+  private String station;
 }
