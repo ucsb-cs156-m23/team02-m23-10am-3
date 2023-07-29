@@ -62,7 +62,6 @@ public class UCSBDiningCommonsMenuController extends ApiController {
         {
 
         UCSBDiningCommonsMenu menu = new UCSBDiningCommonsMenu();
-        menu.setId(id);
         menu.setDiningCommonsCode(diningCommonsCode);
         menu.setName(name);
         menu.setStation(station);
