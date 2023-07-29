@@ -246,13 +246,13 @@ public class UCSBDiningCommonsMenuControllerTests extends ControllerTestCase {
                                 .station("Entree%20Specials")
                                 .build();
 
-                UCSBDiningCommonsMenu ucsbDateEdited = UCSBDiningCommonsMenu.builder()
+                UCSBDiningCommonsMenu ucsbDiningCommonsMenuEdited = UCSBDiningCommonsMenu.builder()
                                 .diningCommonsCode("portola")
                                 .name("Cream%20of%20Broccoli%20Soup%20(v)")
                                 .station("Greens%20&%20Grains")
                                 .build();
 
-                String requestBody = mapper.writeValueAsString(ucsbDateEdited);
+                String requestBody = mapper.writeValueAsString(ucsbDiningCommonsMenuEdited);
 
                 when(ucsbDiningCommonsMenuRepository.findById(eq(67L))).thenReturn(Optional.of(ucsbDiningCommonsMenuOrig));
 
@@ -267,7 +267,7 @@ public class UCSBDiningCommonsMenuControllerTests extends ControllerTestCase {
 
                 // assert
                 verify(ucsbDiningCommonsMenuRepository, times(1)).findById(67L);
-                verify(ucsbDiningCommonsMenuRepository, times(1)).save(ucsbDateEdited); // should be saved with correct user
+                verify(ucsbDiningCommonsMenuRepository, times(1)).save(ucsbDiningCommonsMenuEdited); // should be saved with correct user
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(requestBody, responseString);
         }
