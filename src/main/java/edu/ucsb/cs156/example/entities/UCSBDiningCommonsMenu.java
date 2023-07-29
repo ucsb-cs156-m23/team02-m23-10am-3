@@ -22,5 +22,5 @@ public class UCSBDiningCommonsMenu {
   
   private String diningCommonsCode;
   private String name;
-  private boolean station;
+  private String station;
 }
