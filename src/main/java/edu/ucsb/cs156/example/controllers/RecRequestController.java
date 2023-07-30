@@ -94,27 +94,27 @@ public class RecRequestController extends ApiController {
     //     return genericMessage("UCSBDiningCommons with id %s deleted".formatted(code));
     // }
 
-    // @Operation(summary= "Update a single commons")
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
-    // @PutMapping("")
-    // public UCSBDiningCommons updateCommons(
-    //         @Parameter(name="code") @RequestParam String code,
-    //         @RequestBody @Valid UCSBDiningCommons incoming) {
+    @Operation(summary= "Update a single recommendation request")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public RecRequest updateCommons(
+            @Parameter(name="id") @RequestParam long id,
+            @RequestBody @Valid RecRequest incoming) {
 
-    //     UCSBDiningCommons commons = ucsbDiningCommonsRepository.findById(code)
-    //             .orElseThrow(() -> new EntityNotFoundException(UCSBDiningCommons.class, code));
+        RecRequest recommendation = recRequestRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(RecRequest.class, id));
 
 
-    //     commons.setName(incoming.getName());  
-    //     commons.setHasSackMeal(incoming.getHasSackMeal());
-    //     commons.setHasTakeOutMeal(incoming.getHasTakeOutMeal());
-    //     commons.setHasDiningCam(incoming.getHasDiningCam());
-    //     commons.setLatitude(incoming.getLatitude());
-    //     commons.setLongitude(incoming.getLongitude());
+        recommendation.setRequesterEmail(incoming.getRequesterEmail());
+        recommendation.setProfessorEmail(incoming.getProfessorEmail());
+        recommendation.setExplanation(incoming.getExplanation());
+        recommendation.setDateRequested(incoming.getDateRequested());
+        recommendation.setDateNeeded(incoming.getDateNeeded());
+        recommendation.setDone(incoming.getDone());
 
-    //     ucsbDiningCommonsRepository.save(commons);
+        recRequestRepository.save(recommendation);
 
-    //     return commons;
-    // }
+        return recommendation;
+    }
 }
 
