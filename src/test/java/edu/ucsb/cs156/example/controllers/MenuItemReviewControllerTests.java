@@ -47,12 +47,6 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
                 .andExpect(status().is(403)); // Forbidden
         }
 
-        @WithMockUser(roles = {"USER"})
-        @Test
-        public void logged_in_users_can_get_index() throws Exception {
-            mockMvc.perform(get("/api/menuitemreview/all"))
-                .andExpect(status().is(200)); // Ok
-        }
 
         @Test
         public void logged_out_users_cannot_post() throws Exception {
@@ -65,6 +59,13 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
         public void logged_in_users_cannot_post() throws Exception {
             mockMvc.perform(post("/api/menuitemreview/post"))
                 .andExpect(status().is(403));
+        }
+
+        @WithMockUser(roles = {"USER"})
+        @Test
+        public void logged_in_users_can_get_index() throws Exception {
+            mockMvc.perform(get("/api/menuitemreview/all"))
+                .andExpect(status().is(200)); // Ok
         }
 
         @WithMockUser(roles = {"USER"})
