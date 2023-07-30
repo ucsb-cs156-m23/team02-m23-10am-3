@@ -281,7 +281,7 @@ public class RecRequestControllerTests extends ControllerTestCase {
 
                 RecRequest recRequestEdited = RecRequest.builder()
                                 .requesterEmail("ryanhxhe@gmail.com")
-                                .professorEmail("phtcon@ucsb.edu")
+                                .professorEmail("phtcon1@ucsb.edu")
                                 .explanation("For PhD program")
                                 .dateRequested(ldt2)
                                 .dateNeeded(ldt2)
