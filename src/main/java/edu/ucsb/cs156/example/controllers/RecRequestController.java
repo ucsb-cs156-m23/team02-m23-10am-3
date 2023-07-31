@@ -82,17 +82,17 @@ public class RecRequestController extends ApiController {
         return savedRecommendation;
     }
 
-    // @Operation(summary= "Delete a UCSBDiningCommons")
-    // @PreAuthorize("hasRole('ROLE_ADMIN')")
-    // @DeleteMapping("")
-    // public Object deleteCommons(
-    //         @Parameter(name="code") @RequestParam String code) {
-    //     UCSBDiningCommons commons = ucsbDiningCommonsRepository.findById(code)
-    //             .orElseThrow(() -> new EntityNotFoundException(UCSBDiningCommons.class, code));
+    @Operation(summary= "Delete a Recommendation Request")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("")
+    public Object deleteCommons(
+            @Parameter(name="id") @RequestParam long id) {
+        RecRequest request = recRequestRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(RecRequest.class, id));
 
-    //     ucsbDiningCommonsRepository.delete(commons);
-    //     return genericMessage("UCSBDiningCommons with id %s deleted".formatted(code));
-    // }
+        recRequestRepository.delete(request);
+        return genericMessage("RecRequest with id %s deleted".formatted(id));
+    }
 
     @Operation(summary= "Update a single recommendation request")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
