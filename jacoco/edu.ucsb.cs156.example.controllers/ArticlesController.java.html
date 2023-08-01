@@ -81,6 +81,38 @@ import java.time.LocalDateTime;
 
 <span class="fc" id="L82">        return savedArticles;</span>
     }
+  
+    @Operation(summary= &quot;Delete a Article&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteHelpRequest(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L90">        Articles articles = articlesRepository.findById(id)</span>
+<span class="fc" id="L91">                .orElseThrow(() -&gt; new EntityNotFoundException(Articles.class, id));</span>
+
+<span class="fc" id="L93">        articlesRepository.delete(articles);</span>
+<span class="fc" id="L94">        return genericMessage(&quot;Articles with id %s deleted&quot;.formatted(id));</span>
+    }
     
+    @Operation(summary= &quot;Update a single article&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public Articles updateArticle(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id,
+            @RequestBody @Valid Articles incoming) {
+
+<span class="fc" id="L104">        Articles articles = articlesRepository.findById(id)</span>
+<span class="fc" id="L105">                .orElseThrow(() -&gt; new EntityNotFoundException(Articles.class, id));</span>
+
+<span class="fc" id="L107">        articles.setTitle(incoming.getTitle());</span>
+<span class="fc" id="L108">        articles.setUrl(incoming.getUrl());</span>
+<span class="fc" id="L109">        articles.setExplanation(incoming.getExplanation());</span>
+<span class="fc" id="L110">        articles.setEmail(incoming.getEmail());</span>
+<span class="fc" id="L111">        articles.setDateAdded(incoming.getDateAdded());</span>
+
+<span class="fc" id="L113">        articlesRepository.save(articles);</span>
+
+<span class="fc" id="L115">        return articles;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
