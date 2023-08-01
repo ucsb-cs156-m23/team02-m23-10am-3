@@ -82,17 +82,17 @@ import javax.validation.Valid;
 <span class="fc" id="L82">        return savedRecommendation;</span>
     }
 
-    // @Operation(summary= &quot;Delete a UCSBDiningCommons&quot;)
-    // @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
-    // @DeleteMapping(&quot;&quot;)
-    // public Object deleteCommons(
-    //         @Parameter(name=&quot;code&quot;) @RequestParam String code) {
-    //     UCSBDiningCommons commons = ucsbDiningCommonsRepository.findById(code)
-    //             .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDiningCommons.class, code));
+    @Operation(summary= &quot;Delete a Recommendation Request&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteCommons(
+            @Parameter(name=&quot;id&quot;) @RequestParam long id) {
+<span class="fc" id="L90">        RecRequest request = recRequestRepository.findById(id)</span>
+<span class="fc" id="L91">                .orElseThrow(() -&gt; new EntityNotFoundException(RecRequest.class, id));</span>
 
-    //     ucsbDiningCommonsRepository.delete(commons);
-    //     return genericMessage(&quot;UCSBDiningCommons with id %s deleted&quot;.formatted(code));
-    // }
+<span class="fc" id="L93">        recRequestRepository.delete(request);</span>
+<span class="fc" id="L94">        return genericMessage(&quot;RecRequest with id %s deleted&quot;.formatted(id));</span>
+    }
 
     @Operation(summary= &quot;Update a single recommendation request&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
