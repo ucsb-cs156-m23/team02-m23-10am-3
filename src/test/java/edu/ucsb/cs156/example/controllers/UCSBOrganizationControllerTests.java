@@ -143,7 +143,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                                 .orgCode("OSLI")
                                 .orgTranslationShort("STUDENT LIFE")
                                 .orgTranslation("OFFICE OF STUDENT LIFE")
-                                .inactive(false)
+                                .inactive(true)
                                 .build();
 
                 ArrayList<UCSBOrganization> expectedOrganization = new ArrayList<>();
@@ -172,14 +172,14 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                                 .orgCode("ZPR")
                                 .orgTranslationShort("ZETA PHI RHO")
                                 .orgTranslation("ZETA PHI RHO")
-                                .inactive(false)
+                                .inactive(true)
                                 .build();
 
                 when(ucsbOrganizationRepository.save(eq(zpr))).thenReturn(zpr);
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/ucsborganization/post?orgCode=ZPR&orgTranslationShort=ZETA PHI RHO&orgTranslation=ZETA PHI RHO&inactive=false")
+                                post("/api/ucsborganization/post?orgCode=ZPR&orgTranslationShort=ZETA PHI RHO&orgTranslation=ZETA PHI RHO&inactive=true")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -251,9 +251,9 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                                 .build();
 
                 UCSBOrganization krcEdited = UCSBOrganization.builder()
-                                .orgCode("KRC")
-                                .orgTranslationShort("KOREAN RADIO CL")
-                                .orgTranslation("KOREAN RADIO CLUB")
+                                .orgCode("KRCL")
+                                .orgTranslationShort("KOREAN RADIO CLUB")
+                                .orgTranslation("KOREAN RADIO CL")
                                 .inactive(true)
                                 .build();
 
