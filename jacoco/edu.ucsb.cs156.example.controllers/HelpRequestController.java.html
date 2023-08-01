@@ -83,7 +83,39 @@ import java.time.LocalDateTime;
 <span class="fc" id="L83">        return savedHelpRequest;</span>
     }
 
+    @Operation(summary= &quot;Delete a help request&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteHelpRequest(
+        @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L91">        HelpRequest helpRequest = helpRequestRepository.findById(id)</span>
+<span class="fc" id="L92">                .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
 
+<span class="fc" id="L94">        helpRequestRepository.delete(helpRequest);</span>
+<span class="fc" id="L95">        return genericMessage(&quot;HelpRequest with id %s deleted&quot;.formatted(id));</span>
+    }
+
+    @Operation(summary= &quot;Update a single help request&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public HelpRequest updateHeloHelpRequest(
+        @Parameter(name=&quot;id&quot;) @RequestParam Long id,
+        @RequestBody @Valid HelpRequest incoming) {
+
+<span class="fc" id="L105">        HelpRequest helpRequest = helpRequestRepository.findById(id)</span>
+<span class="fc" id="L106">                .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
+
+<span class="fc" id="L108">        helpRequest.setRequesterEmail(incoming.getRequesterEmail());</span>
+<span class="fc" id="L109">        helpRequest.setTeamId(incoming.getTeamId());</span>
+<span class="fc" id="L110">        helpRequest.setTableOrBreakoutRoom(incoming.getTableOrBreakoutRoom());</span>
+<span class="fc" id="L111">        helpRequest.setExplanation(incoming.getExplanation());</span>
+<span class="fc" id="L112">        helpRequest.setSolved(incoming.getSolved());</span>
+<span class="fc" id="L113">        helpRequest.setRequestTime(incoming.getRequestTime());</span>
+
+<span class="fc" id="L115">        helpRequestRepository.save(helpRequest);</span>
+
+<span class="fc" id="L117">        return helpRequest;</span>
+    }
 
 
 
