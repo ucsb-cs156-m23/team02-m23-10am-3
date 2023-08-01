@@ -81,7 +81,7 @@ public class ArticlesController extends ApiController{
 
         return savedArticles;
     }
-
+  
     @Operation(summary= "Delete a Article")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("")

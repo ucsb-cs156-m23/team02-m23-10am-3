@@ -333,6 +333,5 @@ public class ArticlesControllerTests extends ControllerTestCase{
                 assertEquals("Articles with id 67 not found", json.get("message"));
 
         }
-
     
 }
