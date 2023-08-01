@@ -36,6 +36,7 @@ public class MenuItemReviewController extends ApiController {
     @Autowired
     MenuItemReviewRepository menuItemReviewRepository;
 
+
     @Operation(summary = "List all reviews")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
