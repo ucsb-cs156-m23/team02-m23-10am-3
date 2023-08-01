@@ -36,15 +36,16 @@ import javax.validation.Valid;
     @Autowired
     MenuItemReviewRepository menuItemReviewRepository;
 
-    @Operation(summary= &quot;List all reviews&quot;)
+
+    @Operation(summary = &quot;List all reviews&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
     @GetMapping(&quot;/all&quot;)
     public Iterable&lt;MenuItemReview&gt; allCommonss() {
-<span class="fc" id="L43">        Iterable&lt;MenuItemReview&gt; review = menuItemReviewRepository.findAll();</span>
-<span class="fc" id="L44">        return review;</span>
+<span class="fc" id="L44">        Iterable&lt;MenuItemReview&gt; review = menuItemReviewRepository.findAll();</span>
+<span class="fc" id="L45">        return review;</span>
     }
 
-    @Operation(summary= &quot;Create a new review&quot;)
+    @Operation(summary = &quot;Create a new review&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
     @PostMapping(&quot;/post&quot;)
     public MenuItemReview postItemReview(
@@ -55,17 +56,59 @@ import javax.validation.Valid;
         @Parameter(name=&quot;comments&quot;) @RequestParam String comments
         ) throws JsonProcessingException {
 
-<span class="fc" id="L58">        log.info(&quot;postItemReview: itemId={}, reviewerEmail={}, stars={}, dateReviewed={}, comments={}&quot;, itemId, reviewerEmail, stars, dateReviewed, comments);</span>
+<span class="fc" id="L59">        log.info(&quot;postItemReview: itemId={}, reviewerEmail={}, stars={}, dateReviewed={}, comments={}&quot;, itemId, reviewerEmail, stars, dateReviewed, comments);</span>
 
-<span class="fc" id="L60">        MenuItemReview review = MenuItemReview.builder()</span>
-<span class="fc" id="L61">            .itemId(itemId)</span>
-<span class="fc" id="L62">            .reviewerEmail(reviewerEmail)</span>
-<span class="fc" id="L63">            .stars(stars)</span>
-<span class="fc" id="L64">            .dateReviewed(dateReviewed)</span>
-<span class="fc" id="L65">            .comments(comments)</span>
-<span class="fc" id="L66">            .build();</span>
+<span class="fc" id="L61">        MenuItemReview review = MenuItemReview.builder()</span>
+<span class="fc" id="L62">            .itemId(itemId)</span>
+<span class="fc" id="L63">            .reviewerEmail(reviewerEmail)</span>
+<span class="fc" id="L64">            .stars(stars)</span>
+<span class="fc" id="L65">            .dateReviewed(dateReviewed)</span>
+<span class="fc" id="L66">            .comments(comments)</span>
+<span class="fc" id="L67">            .build();</span>
 
-<span class="fc" id="L68">        return menuItemReviewRepository.save(review);</span>
+<span class="fc" id="L69">        return menuItemReviewRepository.save(review);</span>
+    }
+
+    @Operation(summary = &quot;Get a single review&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;&quot;)
+    public MenuItemReview getById(
+        @Parameter(name=&quot;id&quot;) @RequestParam long id) {
+<span class="fc" id="L77">        MenuItemReview review = menuItemReviewRepository.findById(id)</span>
+<span class="fc" id="L78">            .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
+
+<span class="fc" id="L80">        return review;</span>
+    }
+
+    @Operation(summary = &quot;Update a single menu item review&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public MenuItemReview updatMenuItemReview(
+        @Parameter(name=&quot;id&quot;) @RequestParam Long id,
+        @RequestBody @Valid MenuItemReview menuItemReview) {
+<span class="fc" id="L89">        MenuItemReview oldReview = menuItemReviewRepository.findById(id)</span>
+<span class="fc" id="L90">            .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
+
+<span class="fc" id="L92">        oldReview.setItemId(menuItemReview.getItemId());</span>
+<span class="fc" id="L93">        oldReview.setReviewerEmail(menuItemReview.getReviewerEmail());</span>
+<span class="fc" id="L94">        oldReview.setStars(menuItemReview.getStars());</span>
+<span class="fc" id="L95">        oldReview.setDateReviewed(menuItemReview.getDateReviewed());</span>
+<span class="fc" id="L96">        oldReview.setComments(menuItemReview.getComments());</span>
+
+<span class="fc" id="L98">        menuItemReviewRepository.save(oldReview);</span>
+<span class="fc" id="L99">        return oldReview;</span>
+    }
+
+    @Operation(summary = &quot;Delete a review&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteMenuItemReview(
+        @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L107">        MenuItemReview menuItemReview = menuItemReviewRepository.findById(id)</span>
+<span class="fc" id="L108">            .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
+
+<span class="fc" id="L110">        menuItemReviewRepository.delete(menuItemReview);</span>
+<span class="fc" id="L111">        return genericMessage(&quot;MenuItemReview with id %s deleted&quot;.formatted(id));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
