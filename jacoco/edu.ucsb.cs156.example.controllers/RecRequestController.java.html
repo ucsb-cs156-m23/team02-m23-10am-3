@@ -94,28 +94,28 @@ import javax.validation.Valid;
     //     return genericMessage(&quot;UCSBDiningCommons with id %s deleted&quot;.formatted(code));
     // }
 
-    // @Operation(summary= &quot;Update a single commons&quot;)
-    // @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
-    // @PutMapping(&quot;&quot;)
-    // public UCSBDiningCommons updateCommons(
-    //         @Parameter(name=&quot;code&quot;) @RequestParam String code,
-    //         @RequestBody @Valid UCSBDiningCommons incoming) {
+    @Operation(summary= &quot;Update a single recommendation request&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public RecRequest updateCommons(
+            @Parameter(name=&quot;id&quot;) @RequestParam long id,
+            @RequestBody @Valid RecRequest incoming) {
 
-    //     UCSBDiningCommons commons = ucsbDiningCommonsRepository.findById(code)
-    //             .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDiningCommons.class, code));
+<span class="fc" id="L104">        RecRequest recommendation = recRequestRepository.findById(id)</span>
+<span class="fc" id="L105">                .orElseThrow(() -&gt; new EntityNotFoundException(RecRequest.class, id));</span>
 
 
-    //     commons.setName(incoming.getName());  
-    //     commons.setHasSackMeal(incoming.getHasSackMeal());
-    //     commons.setHasTakeOutMeal(incoming.getHasTakeOutMeal());
-    //     commons.setHasDiningCam(incoming.getHasDiningCam());
-    //     commons.setLatitude(incoming.getLatitude());
-    //     commons.setLongitude(incoming.getLongitude());
+<span class="fc" id="L108">        recommendation.setRequesterEmail(incoming.getRequesterEmail());</span>
+<span class="fc" id="L109">        recommendation.setProfessorEmail(incoming.getProfessorEmail());</span>
+<span class="fc" id="L110">        recommendation.setExplanation(incoming.getExplanation());</span>
+<span class="fc" id="L111">        recommendation.setDateRequested(incoming.getDateRequested());</span>
+<span class="fc" id="L112">        recommendation.setDateNeeded(incoming.getDateNeeded());</span>
+<span class="fc" id="L113">        recommendation.setDone(incoming.getDone());</span>
 
-    //     ucsbDiningCommonsRepository.save(commons);
+<span class="fc" id="L115">        recRequestRepository.save(recommendation);</span>
 
-    //     return commons;
-    // }
+<span class="fc" id="L117">        return recommendation;</span>
+    }
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
